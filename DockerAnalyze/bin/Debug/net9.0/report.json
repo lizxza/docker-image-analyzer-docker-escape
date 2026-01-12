@@ -1,0 +1,211 @@
+﻿{
+  "ImageName": "extreme-escape",
+  "ImageId": "bf10dc63576e",
+  "AnalysisDate": "2026-01-10T19:06:38.7981925Z",
+  "RiskAssessment": {
+    "OverallRisk": 82,
+    "RiskLevel": "Critical",
+    "RiskFactors": [
+      {
+        "Category": "CONFIGURATION",
+        "Description": "Образ запускается от пользователя root",
+        "Weight": 20,
+        "Evidence": "User: root (по умолчанию)",
+        "Layer": "base"
+      },
+      {
+        "Category": "CONFIGURATION",
+        "Description": "Образ запускается от пользователя root по умолчанию",
+        "Weight": 20,
+        "Evidence": "Тип: ROOT_USER",
+        "Layer": "base"
+      },
+      {
+        "Category": "CONFIGURATION",
+        "Description": "Root файловая система может быть изменена (не readonly)",
+        "Weight": 15,
+        "Evidence": "Тип: WRITABLE_ROOTFS",
+        "Layer": "base"
+      },
+      {
+        "Category": "DOCKERFILE",
+        "Description": "Dockerfile не найден в образе",
+        "Weight": 5,
+        "Evidence": "Dockerfile не найден в распакованном образе. Это нормально для многих публичных образов, где Dockerfile хранится отдельно в репозитории.",
+        "Layer": "unknown"
+      },
+      {
+        "Category": "DOCKERFILE",
+        "Description": "Dockerfile не найден в образе. Невозможно проверить историю изменений и инструкции сборки.",
+        "Weight": 5,
+        "Evidence": "Строка 0: DOCKERFILE_NOT_FOUND",
+        "Layer": "dockerfile_line_0"
+      },
+      {
+        "Category": "DOCKERFILE",
+        "Description": "Dockerfile не содержит инструкцию USER, образ будет запускаться от root",
+        "Weight": 20,
+        "Evidence": "Строка 0: NO_USER_INSTRUCTION",
+        "Layer": "dockerfile_line_0"
+      },
+      {
+        "Category": "LAYER",
+        "Description": "Пустой слой (может быть использован для скрытия изменений)",
+        "Weight": 10,
+        "Evidence": "Слой: 7e49dc6156b0",
+        "Layer": "7e49dc6156b0"
+      },
+      {
+        "Category": "LAYER",
+        "Description": "Пустой слой (может быть использован для скрытия изменений)",
+        "Weight": 10,
+        "Evidence": "Слой: f85454e1a8df",
+        "Layer": "f85454e1a8df"
+      },
+      {
+        "Category": "LAYER",
+        "Description": "Пустой слой (может быть использован для скрытия изменений)",
+        "Weight": 10,
+        "Evidence": "Слой: e069a3bb36f7",
+        "Layer": "e069a3bb36f7"
+      },
+      {
+        "Category": "LAYER",
+        "Description": "Пустой слой (может быть использован для скрытия изменений)",
+        "Weight": 10,
+        "Evidence": "Слой: 4f4fb700ef54",
+        "Layer": "4f4fb700ef54"
+      }
+    ],
+    "Evidence": [
+      "Контейнер запускается от root (User: не указан)",
+      "Dockerfile не содержит инструкцию USER"
+    ],
+    "Recommendations": [
+      "Использовать непривилегированного пользователя: Добавьте инструкцию USER в Dockerfile с непривилегированным UID",
+      "Добавить Dockerfile: Храните Dockerfile в репозитории для прозрачности процесса сборки",
+      "КРИТИЧЕСКИЙ РИСК: Требуется немедленный пересмотр конфигурации образа перед использованием в продакшене",
+      "Использовать минимальный базовый образ: Предпочитайте alpine или distroless образы для уменьшения поверхности атаки",
+      "Регулярно обновлять образы: Используйте актуальные версии базовых образов с исправлениями уязвимостей",
+      "Использовать multi-stage builds: Удаляйте инструменты сборки из финального образа",
+      "Применять принцип минимальных привилегий: Запускайте контейнеры от непривилегированных пользователей"
+    ]
+  },
+  "FileSystemAnalysis": {
+    "DangerousBinariesCount": 0,
+    "DangerousBinaries": [],
+    "SetUidFilesCount": 0,
+    "SetUidFiles": [],
+    "WritableDirectoriesCount": 0,
+    "WritableDirectories": [],
+    "InsecurePermissionsCount": 0,
+    "InsecurePermissions": [],
+    "PasswdShadowAnalysis": null
+  },
+  "Vulnerabilities": [],
+  "ConfigurationAnalysis": {
+    "User": null,
+    "RunsAsRoot": true,
+    "Entrypoint": null,
+    "Cmd": "/bin/bash /escape.sh",
+    "CapabilitiesCount": 0,
+    "Capabilities": [],
+    "Privileged": false,
+    "SecurityOptsCount": 0,
+    "SecurityOpts": [],
+    "ReadonlyRootfs": false,
+    "RisksCount": 2,
+    "Risks": [
+      {
+        "Type": "ROOT_USER",
+        "Description": "Образ запускается от пользователя root по умолчанию",
+        "RiskWeight": 20
+      },
+      {
+        "Type": "WRITABLE_ROOTFS",
+        "Description": "Root файловая система может быть изменена (не readonly)",
+        "RiskWeight": 15
+      }
+    ]
+  },
+  "DockerfileAnalysis": {
+    "DockerfileFound": false,
+    "DockerfilePath": null,
+    "UserInstruction": null,
+    "RunInstructionsCount": 0,
+    "AddCopyInstructionsCount": 0,
+    "RisksCount": 2,
+    "Risks": [
+      {
+        "Type": "DOCKERFILE_NOT_FOUND",
+        "Description": "Dockerfile не найден в образе. Невозможно проверить историю изменений и инструкции сборки.",
+        "LineNumber": 0,
+        "RiskWeight": 5
+      },
+      {
+        "Type": "NO_USER_INSTRUCTION",
+        "Description": "Dockerfile не содержит инструкцию USER, образ будет запускаться от root",
+        "LineNumber": 0,
+        "RiskWeight": 20
+      }
+    ],
+    "AbsenceReason": "Dockerfile не найден в распакованном образе. Это нормально для многих публичных образов, где Dockerfile хранится отдельно в репозитории."
+  },
+  "LayerAnalysis": {
+    "LayersCount": 4,
+    "Layers": [
+      {
+        "LayerId": "7e49dc6156b0",
+        "ParentLayerId": null,
+        "Size": 0,
+        "Created": "2025-10-13T20:23:18.0286235+03:00",
+        "AddedFilesCount": 0,
+        "DeletedFilesCount": 0,
+        "ModifiedFilesCount": 0,
+        "RisksCount": 1,
+        "Risks": [
+          "Пустой слой (может быть использован для скрытия изменений)"
+        ]
+      },
+      {
+        "LayerId": "f85454e1a8df",
+        "ParentLayerId": "7e49dc6156b0",
+        "Size": 0,
+        "Created": "2025-10-13T20:23:18.0659217+03:00",
+        "AddedFilesCount": 0,
+        "DeletedFilesCount": 0,
+        "ModifiedFilesCount": 0,
+        "RisksCount": 1,
+        "Risks": [
+          "Пустой слой (может быть использован для скрытия изменений)"
+        ]
+      },
+      {
+        "LayerId": "e069a3bb36f7",
+        "ParentLayerId": "f85454e1a8df",
+        "Size": 0,
+        "Created": "2025-10-13T20:23:18.1023704+03:00",
+        "AddedFilesCount": 0,
+        "DeletedFilesCount": 0,
+        "ModifiedFilesCount": 0,
+        "RisksCount": 1,
+        "Risks": [
+          "Пустой слой (может быть использован для скрытия изменений)"
+        ]
+      },
+      {
+        "LayerId": "4f4fb700ef54",
+        "ParentLayerId": "e069a3bb36f7",
+        "Size": 0,
+        "Created": "2025-10-13T20:23:18.135072+03:00",
+        "AddedFilesCount": 0,
+        "DeletedFilesCount": 0,
+        "ModifiedFilesCount": 0,
+        "RisksCount": 1,
+        "Risks": [
+          "Пустой слой (может быть использован для скрытия изменений)"
+        ]
+      }
+    ]
+  }
+}

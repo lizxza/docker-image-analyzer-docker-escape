@@ -61,5 +61,5 @@ dotnet run -- <image_name> [output_json_path]
 ```
 
 Параметры:
-   image_name - имя или ID Docker-образа для анализа
-   output_json_path - путь для сохранения JSON отчета (по умолчанию: report.json)
+   - image_name - имя или ID Docker-образа для анализа
+   - output_json_path - путь для сохранения JSON отчета (по умолчанию: report.json)
